@@ -1,26 +1,22 @@
-name: repo visualization
-
+name: Repo visualizer
 on:
-    push:
-    workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
-    diagram:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+  visualize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Update diagram
-              id: make_diagram
-              uses: githubocto/repo-visualizer@0.7.1
-              with:
-                output_file: "output-diagram.svg"
-                artifact_name: "diagram"
-                should_push: false
+      - name: Genereer diagram
+        uses: githubocto/repo-visualizer@0.9.1
+        with:
+          output_file: diagram.svg
+          should_push: false        # NIET committen (anders is dat de default)
 
-            - name: Upload als artifact
-              uses: actions/upload-artifact@v4
-              with:
-                name: diagram             # exact deze naam gevraagd
-                path: diagram.svg
+      - name: Upload als artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagram             # exact deze naam gevraagd
+          path: diagram.svg
