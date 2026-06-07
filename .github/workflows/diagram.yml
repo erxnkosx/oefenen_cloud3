@@ -18,3 +18,9 @@ jobs:
                 output_file: "output-diagram.svg"
                 artifact_name: "diagram"
                 should_push: false
+
+            - name: Upload als artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: diagram             # exact deze naam gevraagd
+                path: diagram.svg
